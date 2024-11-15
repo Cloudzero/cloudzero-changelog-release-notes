@@ -21,8 +21,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: version
-        id: Version
+      - name: Version
+        id: version
         uses: flatherskevin/semver-action@v1
         with:
           incrementLevel: patch
