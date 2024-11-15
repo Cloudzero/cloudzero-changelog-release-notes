@@ -28,7 +28,7 @@ jobs:
           incrementLevel: patch
           source: tags
       - name: Validate Release Notes
-        uses: ./.github/actions/validate-release-notes
+        uses: ./
         id: changelog
         with:
           version: ${{ steps.version.outputs.nextVersion }}

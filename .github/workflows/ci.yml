@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
   pull_request:
     branches:
-      - develop
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -29,6 +29,6 @@ jobs:
           incrementLevel: patch
           source: tags
       - name: Validate Release Notes
-        uses: ./.github/actions/validate-release-notes
+        uses: ./
         with:
           version: ${{ steps.version.outputs.nextVersion }}
