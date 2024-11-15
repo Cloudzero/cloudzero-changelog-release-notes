@@ -1,0 +1,48 @@
+name: CloudZero Changelog Release Notes Action
+description: GitHub Action to validate release notes for a given version
+author: Cloudzero
+branding:
+  icon: chevron-up
+  color: purple
+
+inputs:
+  releaseNotesDirectory:
+    description: "The path to the release notes directory"
+    default: ${{ github.workspace }}/docs/releases
+  version:
+    description: "The version to validate"
+    required: true
+
+outputs:
+  releaseNotesFile:
+    description: "The path to the release notes file"
+    value: "${{ steps.set-path.outputs.file_path }}"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set Release Notes Path
+      id: set-path
+      shell: bash
+      run: |
+        FILE_PATH="${{ inputs.releaseNotesDirectory }}/${{ inputs.version }}.md"
+        echo "file_path=$FILE_PATH" >> $GITHUB_OUTPUT
+        
+    - name: Validate Release Notes are Present
+      shell: bash
+      run: |
+        if [ ! -f "${{ steps.set-path.outputs.file_path }}" ]; then
+          echo "Release notes for ${{ inputs.version }} are missing. Please create a release notes file at ${{ steps.set-path.outputs.file_path }}"
+          exit 1
+        fi
+
+    - name: Validate Formatting
+      shell: bash
+      run: |
+        if ! grep -q "^# \[${{ inputs.version }}\](https://github.com/cloudzero/cloudzero-changelog-release-notes/compare/.*) ([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\})" ${{ steps.set-path.outputs.file_path }}; then
+            echo "Error: Version ${{ inputs.version }} does not have the correct title format \"# [${{ inputs.version }}](https://github.com/cloudzero/cloudzero-changelog-release-notes/compare/) - YYYY-MM-DD\""
+            exit 1
+        fi
+    
