@@ -8,7 +8,7 @@ branding:
 inputs:
   releaseNotesDirectory:
     description: "The path to the release notes directory"
-    default: "${{ github.workspace }}/docs/releases"
+    default: ./docs/releases
   nextVersion:
     description: "The version to validate"
     required: true
