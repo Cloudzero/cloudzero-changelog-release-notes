@@ -4,44 +4,23 @@
 name: CI
 
 on:
+  workflow_call:
   workflow_dispatch:
-    inputs:
-      versionIncrementLevel:
-        description: Increment level to use for the release
-        required: true
-        type: choice
-        default: patch
-        options:
-          - maintenance
-          - major
-          - minor
-          - patch
-          - premajor
-          - preminor
-          - prepatch
-          - prerelease
+  pull_request:
+    branches:
+      - develop
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main'  && github.ref != 'refs/heads/develop'}}
-
-env:
-  AWS_DEFAULT_REGION: us-east-1
 
 jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Version from SemVer
-        if: ${{ github.event.inputs.versionIncrementLevel != 'maintenance' }}
-        id: version
-        uses: flatherskevin/semver-action@v1
-        with:
-          incrementLevel: ${{ github.event.inputs.versionIncrementLevel }}
-          source: tags
       - name: Validate Release Notes
-        if: ${{ github.event.inputs.versionIncrementLevel != 'maintenance' }}
         uses: ./
         with:
-          version: ${{ steps.version.outputs.nextVersion }}
+          version: "0.0.1"
+          release_notes_file: "tests/0.0.1.md"
