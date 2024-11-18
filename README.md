@@ -36,7 +36,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Version from SemVer
+      - name: Version
         id: version
         uses: flatherskevin/semver-action@v1
         with:
