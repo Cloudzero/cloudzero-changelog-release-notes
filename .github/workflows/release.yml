@@ -4,12 +4,21 @@
 name: Release
 
 on:
-  push:
-    paths:
-      - './action.yml'
-    branches:
-      - main
-    
+  workflow_dispatch:
+    inputs:
+      versionIncrementLevel:
+        description: Increment level to use for the release
+        required: true
+        type: choice
+        default: patch
+        options:
+          - major
+          - minor
+          - patch
+          - premajor
+          - preminor
+          - prepatch
+          - prerelease
 
 concurrency:
   group: ${{ github.ref }}-release
@@ -19,13 +28,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - uses: actions/checkout@v4
       - name: Version
         id: version
         uses: flatherskevin/semver-action@v1
         with:
-          incrementLevel: patch
+          incrementLevel: ${{ github.event.inputs.versionIncrementLevel }}
           source: tags
       - name: Validate Release Notes
         uses: ./
@@ -40,7 +50,12 @@ jobs:
           make_latest: true
           target_commitish: ${{ github.sha }}
           body_path: ${{ steps.changelog.outputs.releaseNotesFile }}
-      - name: Tag v1
-        run: git tag -f v1
-      - name: Push v1
-        run: git push origin v1 --force
+
+  failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref != 'refs/heads/main' }}
+    steps:
+      - name: Fail If Branch Is Not Main
+        run: |
+          echo "This workflow can only be run from the 'main' branch. Current branch: ${{ github.ref }}"
+          exit 1
