@@ -34,17 +34,17 @@ This guide outlines the steps and best practices for managing releases in the re
   
 **Automations:**
 
-- Opening a PR will automatically notify the **Product Management (PM)** and **Documentation** teams for review.
+- Opening a PR will automatically notify the stakeholder teams for review.
 
 ### 3. Review and Merge the PR
 
-- **Reviewers:** PM Team, Documentation Team
+- **Stakeholders:** DevEx Team, Principal Engineers
 - **Approval:** Obtain necessary approvals from the reviewers.
 - **Merge:** Once approved, merge the release notes PR into the `develop` branch.
 
 ### 4. Trigger the Manual Release Workflow
 
-- **Workflow Link:** [Manual Release Workflow](https://github.com/Cloudzero/cloudzero-charts/actions/workflows/build-and-publish-chart.yml)
+- **Workflow Link:** [Release](https://github.com/Cloudzero/cloudzero-changelog-release-notes/actions/workflows/release.yml)
   
 **Purpose:**
 
@@ -60,7 +60,7 @@ This guide outlines the steps and best practices for managing releases in the re
 
 ### 5. Obtain External Approvals
 
-- **Stakeholders Involved:** Product Management, Documentation, and any other designated external parties.
+- **Stakeholders Involved:** DevEx Team, Principal Engineers
 - **Approval Process:**
   - Stakeholders review the functionality, documentation, and overall release readiness.
   - Upon satisfaction, stakeholders provide manual approval through the workflow interface.
@@ -150,7 +150,7 @@ Use the following sections to organize your release notes:
 Copy and paste the following template to create your release notes. Replace placeholders with relevant information.
 
 ```markdown
-## [X.X.X](https://github.com/cloudzero/cloudzero-charts/compare/vX.X.X-1...vX.X.X) (YYYY-MM-DD)
+## [X.X.X](https://github.com/cloudzero/cloudzero-changelog-release-notes/compare/Y.Y.Y...X.X.X) (YYYY-MM-DD)
 
 > Brief description of the release.
 
@@ -181,20 +181,7 @@ Copy and paste the following template to create your release notes. Replace plac
 
 **Example:**
 
-```markdown
-## [0.29.0](https://github.com/cloudzero/cloudzero-charts/compare/v0.27.0...v0.29.0) (2024-11-07)
-
-> This release includes performance improvements and minor changes to documentation.
-
-### Performance Improvements
-
-* **dependencies:** Bump dependencies to latest versions for improved security and performance. [4a4ee13](https://github.com/cloudzero/cloudzero-charts/commit/4a4ee13)
-
-### Other Changes
-
-* **chore(conventionalChangelog):** Add Conventional Changelog for automated release notes generation. [aafcdd9](https://github.com/cloudzero/cloudzero-charts/commit/aafcdd9)
-* **docs(CHANGELOG):** Add changelog documentation. [e2c7435](https://github.com/cloudzero/cloudzero-charts/commit/e2c7435)
-```
+Examples can be found in the [docs/releases](https://github.com/Cloudzero/cloudzero-changelog-release-notes/tree/main/docs/releases) folder.
 
 ---
 
