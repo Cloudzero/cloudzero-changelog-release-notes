@@ -28,6 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - uses: actions/checkout@v4
       - name: Version from SemVer
@@ -49,3 +50,12 @@ jobs:
           make_latest: true
           target_commitish: ${{ github.sha }}
           body_path: ${{ steps.changelog.outputs.releaseNotesFile }}
+
+  failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref != 'refs/heads/main' }}
+    steps:
+      - name: Fail If Branch Is Not Main
+        run: |
+          echo "This workflow can only be run from the 'main' branch. Current branch: ${{ github.ref }}"
+          exit 1
