@@ -41,8 +41,8 @@ runs:
     - name: Validate Formatting
       shell: bash
       run: |
-        if ! grep -q "^# \[${{ inputs.version }}\](https://github.com/cloudzero/cloudzero-changelog-release-notes/compare/.*) ([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\})" ${{ steps.set-path.outputs.file_path }}; then
-            echo "Error: Version ${{ inputs.version }} does not have the correct title format \"# [${{ inputs.version }}](https://github.com/cloudzero/cloudzero-changelog-release-notes/compare/) - YYYY-MM-DD\""
+        if ! grep -q "^# \[${{ inputs.version }}\](https://github.com/${{ github.repository }}/compare/.*) ([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\})" ${{ steps.set-path.outputs.file_path }}; then
+            echo "Error: Version ${{ inputs.version }} does not have the correct title format \"# [${{ inputs.version }}](https://github.com/${{ github.repository }}/compare/) - YYYY-MM-DD\""
             exit 1
         fi
     
