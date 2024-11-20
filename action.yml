@@ -1,3 +1,6 @@
+#  SPDX-FileCopyrightText: Copyright (c) CloudZero, Inc. or its affiliates. All Rights Reserved.
+#  SPDX-License-Identifier: Apache-2.0
+
 name: CloudZero Changelog Release Notes Action
 description: GitHub Action to validate release notes for a given version
 author: Cloudzero
