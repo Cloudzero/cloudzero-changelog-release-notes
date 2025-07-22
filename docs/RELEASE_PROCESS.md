@@ -38,7 +38,7 @@ This guide outlines the steps and best practices for managing releases in the re
 
 ### 3. Review and Merge the PR
 
-- **Stakeholders:** DevEx Team, Principal Engineers
+- **Stakeholders:** Nimbus Team, Principal Engineers
 - **Approval:** Obtain necessary approvals from the reviewers.
 - **Merge:** Once approved, merge the release notes PR into the `develop` branch.
 
@@ -60,7 +60,7 @@ This guide outlines the steps and best practices for managing releases in the re
 
 ### 5. Obtain External Approvals
 
-- **Stakeholders Involved:** DevEx Team, Principal Engineers
+- **Stakeholders Involved:** Nimbus Team, Principal Engineers
 - **Approval Process:**
   - Stakeholders review the functionality, documentation, and overall release readiness.
   - Upon satisfaction, stakeholders provide manual approval through the workflow interface.
