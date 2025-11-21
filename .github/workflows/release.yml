@@ -30,7 +30,7 @@ jobs:
       contents: write
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Version
         id: version
         uses: flatherskevin/semver-action@v1
