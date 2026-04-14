@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Version
         id: version
-        uses: flatherskevin/semver-action@v1
+        uses: Cloudzero/ops-github-actions/.github/actions/common/semver@v2
         with:
           incrementLevel: ${{ github.event.inputs.versionIncrementLevel }}
           source: tags
