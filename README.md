@@ -12,19 +12,10 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      versionIncrementLevel:
-        description: Increment level to use for the release
+      version:
+        description: Version to release (e.g. 1.2.3)
         required: true
-        type: choice
-        default: patch
-        options:
-          - major
-          - minor
-          - patch
-          - premajor
-          - preminor
-          - prepatch
-          - prerelease  
+        type: string
 
 concurrency:
   group: ${{ github.ref }}-release
@@ -36,22 +27,16 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Version
-        id: version
-        uses: Cloudzero/ops-github-actions/.github/actions/common/semver@v2
-        with:
-          incrementLevel: ${{ github.event.inputs.versionIncrementLevel }}
-          source: tags
       - name: Validate Release Notes
         uses: Cloudzero/cloudzero-changelog-release-notes@v1
         id: changelog
         with:
-          version: ${{ steps.version.outputs.nextVersion }}
+          version: ${{ github.event.inputs.version }}
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          name: ${{ steps.version.outputs.nextVersion }}
-          tag_name: ${{ steps.version.outputs.nextVersion }}
+          name: ${{ github.event.inputs.version }}
+          tag_name: ${{ github.event.inputs.version }}
           make_latest: true
           target_commitish: ${{ github.sha }}
           body_path: ${{ steps.changelog.outputs.releaseNotesFile }}
