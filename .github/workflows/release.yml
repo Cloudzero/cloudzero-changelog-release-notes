@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Version
         id: version
-        uses: flatherskevin/semver-action@v1
+        uses: ./.github/actions/semver
         with:
           incrementLevel: ${{ github.event.inputs.versionIncrementLevel }}
           source: tags

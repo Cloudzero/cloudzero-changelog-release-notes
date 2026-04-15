@@ -1,0 +1,53 @@
+#  SPDX-FileCopyrightText: Copyright (c) CloudZero, Inc. or its affiliates. All Rights Reserved.
+#  SPDX-License-Identifier: Apache-2.0
+
+name: Semver
+description: Determine the current and next semantic version from repository tags or releases.
+
+inputs:
+  incrementLevel:
+    description: >
+      Semver increment level: major, minor, patch, premajor, preminor,
+      prepatch, prerelease, or auto (detect from PR title / commit message).
+    required: false
+    default: 'patch'
+  prefix:
+    description: Filter versions by prefix on raw tag name
+    required: false
+    default: ''
+  source:
+    description: 'Version source: tags or releases'
+    required: false
+    default: 'tags'
+  includePrereleases:
+    description: >
+      Include prereleases when resolving the current version.
+      Note: for compatibility this is effectively a no-op because
+      coercion strips prerelease metadata.
+    required: false
+    default: 'false'
+
+outputs:
+  currentVersion:
+    description: Highest existing semver found (bare, e.g. 1.2.3)
+    value: ${{ steps.semver.outputs.currentVersion }}
+  nextVersion:
+    description: Bumped version (bare semver)
+    value: ${{ steps.semver.outputs.nextVersion }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Compute Semver
+      id: semver
+      shell: bash
+      env:
+        INPUT_INCREMENT_LEVEL: ${{ inputs.incrementLevel }}
+        INPUT_TOKEN: ${{ github.token }}
+        INPUT_PREFIX: ${{ inputs.prefix }}
+        INPUT_SOURCE: ${{ inputs.source }}
+        PR_TITLE: ${{ github.event.pull_request.title }}
+        HEAD_COMMIT_MSG: ${{ github.event.head_commit.message }}
+        GH_API_URL: ${{ github.api_url }}
+        GH_REPOSITORY: ${{ github.repository }}
+      run: ${{ github.action_path }}/semver.sh
