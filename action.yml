@@ -24,7 +24,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     
     - name: Set Release Notes Path
       id: set-path
